@@ -55,7 +55,10 @@ export const signup = async (req, res, next) => {
 };
 
 export const signout = (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+    secure: true,
+    sameSite: "none",
+  });
   return res.json({ message: "Sesión cerrada." });
 };
 

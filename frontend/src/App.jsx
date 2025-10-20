@@ -1,7 +1,10 @@
 import Navbar from "./components/navbar/Navbar";
 import { Conteiner } from "./components/ui";
+import { ProtectedRoutes } from "./components/ProtectedRoutes";
+import { useAuth } from "./context/authContext";
+import { TareasProvider } from "./context/TareasContext";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -13,20 +16,41 @@ import TareaFormPage from "./pages/TareaFormPage";
 import NotFound from "./pages/NotFound";
 
 function App() {
+  const { isAuth } = useAuth();
+
   return (
     <>
       <Navbar />
       <Conteiner className="py-5">
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route
+            element={
+              <ProtectedRoutes isAllowed={!isAuth} redirectTo="/tareas" />
+            }
+          >
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+          </Route>
 
-          <Route path="/perfil" element={<ProfilePage />} />
-          <Route path="/tareas" element={<TareasPage />} />
-          <Route path="/tareas/crear" element={<TareaFormPage />} />
-          <Route path="/tareas/editar/:id" element={<TareaFormPage />} />
+          <Route
+            element={<ProtectedRoutes isAllowed={isAuth} redirectTo="/login" />}
+          >
+            <Route path="/perfil" element={<ProfilePage />} />
+
+            <Route
+              element={
+                <TareasProvider>
+                  <Outlet />
+                </TareasProvider>
+              }
+            >
+              <Route path="/tareas" element={<TareasPage />} />
+              <Route path="/tareas/crear" element={<TareaFormPage />} />
+              <Route path="/tareas/editar/:id" element={<TareaFormPage />} />
+            </Route>
+          </Route>
 
           <Route path="*" element={<NotFound />} />
         </Routes>
