@@ -1,32 +1,51 @@
 import { Button, Card, Input, Label, Textarea } from "../components/ui";
 import { useForm } from "react-hook-form";
 import { useTareas } from "../context/TareasContext";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 function TareaFormPage() {
-  const { crearTarea } = useTareas();
+  const {
+    crearTarea,
+    listarTarea,
+    editarTarea,
+    errors: tareaError,
+  } = useTareas();
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
+  const params = useParams();
+  console.log(params);
 
   const navigate = useNavigate();
 
-  const [postError, setPostError] = useState([]);
-
   const onSubmit = handleSubmit(async (data) => {
-    const res = await crearTarea(data);
-    if (res) {
+    let tarea;
+    if (!params.id) {
+      tarea = await crearTarea(data);
+      navigate("/tareas");
+    } else {
+      tarea = await editarTarea(params.id, data);
       navigate("/tareas");
     }
   });
 
+  useEffect(() => {
+    if (params.id) {
+      listarTarea(params.id).then((tarea) => {
+        setValue("titulo", tarea.titulo);
+        setValue("descripcion", tarea.descripcion);
+      });
+    }
+  }, []);
+
   return (
     <div className="flex h-[80vh] justify-center items-center">
       <Card>
-        {postError.map((error, index) => (
+        {tareaError.map((error, index) => (
           <div key={index} className="text-red-500 font-bold">
             {error}
           </div>
@@ -57,7 +76,7 @@ function TareaFormPage() {
             {...register("descripcion", { required: true })}
           />
 
-          <Button type="submit">Crear Tarea</Button>
+          <Button type="submit">{params.id ? "Aceptar" : "Guardar"}</Button>
         </form>
       </Card>
     </div>

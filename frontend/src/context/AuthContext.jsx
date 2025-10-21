@@ -16,6 +16,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isAuth, setIsAuth] = useState(false);
   const [errors, setErrors] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const signin = async (data) => {
     try {
@@ -59,12 +60,14 @@ export function AuthProvider({ children }) {
   };
 
   useEffect(() => {
+    setLoading(true);
     if (Cookie.get("token")) {
       axios
         .get("http://localhost:3000/api/profile", { withCredentials: true })
         .then((res) => {
           setUser(res.data);
           setIsAuth(true);
+          setLoading(false);
         })
         .catch((err) => {
           console.log(err);
@@ -72,7 +75,15 @@ export function AuthProvider({ children }) {
           setIsAuth(false);
         });
     }
+    setLoading(false);
   }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setErrors(null);
+    }, 4000);
+    return () => clearTimeout(timeout);
+  }, [errors]);
 
   return (
     <AuthContext.Provider
@@ -86,6 +97,7 @@ export function AuthProvider({ children }) {
         setErrors,
         signin,
         signout,
+        loading,
       }}
     >
       {children}

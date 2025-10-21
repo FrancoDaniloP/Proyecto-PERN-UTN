@@ -16,7 +16,11 @@ import TareaFormPage from "./pages/TareaFormPage";
 import NotFound from "./pages/NotFound";
 
 function App() {
-  const { isAuth } = useAuth();
+  const { isAuth, loading } = useAuth();
+
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <>
