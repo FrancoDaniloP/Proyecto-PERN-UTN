@@ -35,7 +35,7 @@ export function AuthProvider({ children }) {
 
   const signup = async (data) => {
     try {
-      const res = await axios.post("http://localhost:3000/api/signup", data, {
+      const res = await axios.post("/signup", data, {
         withCredentials: true,
       });
       setUser(res.data.user);
@@ -63,7 +63,7 @@ export function AuthProvider({ children }) {
     setLoading(true);
     if (Cookie.get("token")) {
       axios
-        .get("http://localhost:3000/api/profile", { withCredentials: true })
+        .get("/profile", { withCredentials: true })
         .then((res) => {
           setUser(res.data);
           setIsAuth(true);

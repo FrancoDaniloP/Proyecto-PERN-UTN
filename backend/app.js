@@ -4,6 +4,8 @@ import tareasRoutes from "./router/tareas.routes.js";
 import authRoutes from "./router/auth.routes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { pool } from "./db.js";
+import { ORIGIN } from "./config.js";
 
 const app = express();
 
@@ -12,7 +14,7 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ORIGIN,
     credentials: true,
   })
 );
@@ -21,6 +23,10 @@ app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
   res.send({ message: "Bienvenidos" });
+});
+app.get("/api/ping", async (req, res) => {
+  const result = await pool.query("SELECT NOW()");
+  res.json(result.rows[0]);
 });
 app.use("/api", tareasRoutes);
 app.use("/api", authRoutes);
