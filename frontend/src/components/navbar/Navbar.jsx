@@ -10,7 +10,7 @@ function Navbar() {
   const { isAuth, signout, user } = useAuth();
   return (
     <nav className="bg-zinc-950 ">
-      <Conteiner className="flex justify-between px-20 py-3">
+      <Conteiner className="flex sm:justify-between justify-center px-20 py-3">
         <Link to="/">
           <h1 className="text-2xl font-bold text-sky-500">PROYECT PERN</h1>
         </Link>

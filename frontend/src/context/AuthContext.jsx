@@ -20,7 +20,7 @@ export function AuthProvider({ children }) {
 
   const signin = async (data) => {
     try {
-      const res = await axios.post("/signin", data);
+      const res = await axios.post("/api/signin", data);
       setUser(res.data);
       setIsAuth(true);
       return res.data;
@@ -35,7 +35,7 @@ export function AuthProvider({ children }) {
 
   const signup = async (data) => {
     try {
-      const res = await axios.post("/signup", data, {
+      const res = await axios.post("/api/signup", data, {
         withCredentials: true,
       });
       setUser(res.data.user);
@@ -53,7 +53,9 @@ export function AuthProvider({ children }) {
   };
 
   const signout = async () => {
-    const res = await axios.post("/signout", null, { withCredentials: true });
+    const res = await axios.post("/api/signout", null, {
+      withCredentials: true,
+    });
     setUser(null);
     setIsAuth(false);
     return res.data;

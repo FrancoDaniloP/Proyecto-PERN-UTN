@@ -1,6 +1,5 @@
 import { Button, Input, Card, Label, Conteiner } from "../components/ui";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 
