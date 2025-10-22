@@ -1,7 +1,7 @@
 import Navbar from "./components/navbar/Navbar";
 import { Conteiner } from "./components/ui";
 import { ProtectedRoutes } from "./components/ProtectedRoutes";
-import { useAuth } from "./context/authContext";
+import { useAuth } from "./context/AuthContext";
 import { TareasProvider } from "./context/TareasContext";
 
 import { Routes, Route, Outlet } from "react-router-dom";
