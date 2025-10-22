@@ -9,4 +9,4 @@ export const eliminarTareaRequest = (id) => axios.delete(`/api/tareas/${id}`);
 export const listarTareaRequest = (id) => axios.get(`/api/tareas/${id}`);
 
 export const actualizarTareaRequest = (id, tarea) =>
-  axios.put(`/tareas/${id}`, tarea);
+  axios.put(`/api/tareas/${id}`, tarea);
