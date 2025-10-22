@@ -43,7 +43,7 @@ function LoginPage() {
             placeholder="Contraseña"
             {...register("password", { required: true })}
           />
-          <Button className="w-full mt-4" type="submit">
+          <Button className="w-full mt-4 justify-center" type="submit">
             Iniciar sesión
           </Button>
         </form>
