@@ -40,11 +40,11 @@ function Navbar() {
               </li>
               <li className="flex gap-x-2 items-center justify-center">
                 <img
-                  src={user.gravatar}
+                  src={user?.gravatar}
                   alt=""
                   className="h-8 w-8 rounded-full"
                 />
-                <span className="font-medium">{user.name}</span>
+                <span className="font-medium">{user?.name}</span>
               </li>
             </>
           ) : (
