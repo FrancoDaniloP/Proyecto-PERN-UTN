@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { PublicRoutes, PrivateRoutes } from "./navigation";
 import { Conteiner } from "../ui";
-import { useAuth } from "../../context/authContext";
+import { useAuth } from "../../context/AuthContext";
 import { twMerge } from "tailwind-merge";
 import { BiLogOut } from "react-icons/bi";
 
